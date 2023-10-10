@@ -1,0 +1,16 @@
+.random-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .random-items h1,
+  .random-items h2 {
+    text-align: center;
+  }
+  
+  .random-items div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }

@@ -1,33 +1,39 @@
-import { useState } from 'react'
-import './App.css'
+// App.jsx
+import React, { useState } from 'react';
+import RandomItems from './components/RandomItems';
+import History from './components/History';
+import BanList from './components/BanList';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [items, setItems] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [banList, setBanList] = useState([]);
+  const [isDiscoverClicked, setIsDiscoverClicked] = useState(false);
+
+  const addToHistory = (item) => {
+    setHistory([...history, item]);
+  };
+
+  const addToBanList = (item) => {
+    setBanList([...banList, item]);
+  };
+
+  const shuffleItems = async () => {
+    setIsDiscoverClicked(true);
+    const response = await fetch('https://rickandmortyapi.com/api/character');
+    const data = await response.json();
+    setItems(data.results.sort(() => Math.random() - 0.5));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app">
+      <button onClick={shuffleItems}>Discover!</button>
+      {isDiscoverClicked && <RandomItems items={items} addToHistory={addToHistory} addToBanList={addToBanList} />}
+      <History history={history} />
+      <BanList banList={banList} />
+    </div>
+  );
+};
 
-export default App
+export default App;

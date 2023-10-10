@@ -1,0 +1,12 @@
+.ban-list {
+    position: absolute;
+    right: 0;
+    width: 20%;
+  }
+
+  
+  .ban-list div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
